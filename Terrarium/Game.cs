@@ -7,7 +7,6 @@ namespace Terrarium
     public class Game
     {
         private WorkField _field;
-        private static System.Timers.Timer aTimer;
         public Game(UnitCounts counts, int dimension = 5)
         {
             _field = new WorkField(counts, OnGreetingHappened, dimension);
@@ -36,7 +35,7 @@ namespace Terrarium
             Thread.Sleep(minutes * 60000);
         }
 
-        private void OnGreetingHappened(object sender, TerrrariumModel.MeetingEventArgs e)
+        public void OnGreetingHappened(object sender, TerrrariumModel.MeetingEventArgs e)
         {
             Console.WriteLine(e.Greeting);
         }

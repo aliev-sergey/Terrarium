@@ -156,7 +156,6 @@ namespace Terrarium
         /// </summary>
         public void MoveAllObjects()
         {
-            int xCoord, yCoord;
             IMovable imvbl;
             for (int i = 0; i < _movableObjects.Count; i++)
             {
@@ -164,14 +163,14 @@ namespace Terrarium
 
                 if (imvbl.IsAlive) // Любой живой объект сдвигается на случайную соседнюю клетку
                 {
-                    xCoord = _random.Next(imvbl.Location.X - 1, imvbl.Location.X + 1);
-                    yCoord = _random.Next(imvbl.Location.Y - 1, imvbl.Location.Y + 1);
+                    int xCoord = _random.Next(imvbl.Location.X - 1, imvbl.Location.X + 1);
+                    int yCoord = _random.Next(imvbl.Location.Y - 1, imvbl.Location.Y + 1);
                     imvbl.Move(new Point(xCoord, yCoord));
                 }
                 if (imvbl is Work && (imvbl as Work).IsExecuted) // Выполненная работа передвигается в случайную область поля
                 {
-                    xCoord = _random.Next(0, _fieldDimension - 1);
-                    yCoord = _random.Next(0, _fieldDimension - 1);
+                    int xCoord = _random.Next(0, _fieldDimension - 1);
+                    int yCoord = _random.Next(0, _fieldDimension - 1);
                     if (!(imvbl as Work).IsCustomerGenerated)
                     {
                         imvbl.Move(new Point(xCoord, yCoord));
@@ -180,14 +179,11 @@ namespace Terrarium
                     {
                         imvbl.Move(new Point(_fieldDimension + 1, _fieldDimension + 1)); // Если работа сгенерирована клиентом, убирается с поля
                     }
-
                 }
                 if ((imvbl is SalaryAddition) && !ProbabilityGen.Rand75() && !(imvbl as SalaryAddition).IsBigBossGenerated)
                     //  Если это не сгенерированная Бигбоссом надбавка, то убирается с поля, чтобы затем полявится с 25 процентной вероятностью
                 {
-                    xCoord = _random.Next(0, _fieldDimension - 1);
-                    yCoord = _random.Next(0, _fieldDimension - 1);
-                    imvbl.Move(new Point(xCoord, yCoord));
+                    ReplaceToRandPlace(imvbl);
                 }
                 if (imvbl is Customer && ProbabilityGen.Rand75())
                 //  Добавляем работу клиентом с 75 процентой вероятностью
@@ -223,6 +219,12 @@ namespace Terrarium
                     SayHello(movableObj);
                 }
             }
+        }
+        private void ReplaceToRandPlace(IMovable imvbl)
+        {
+            int xCoord = _random.Next(0, _fieldDimension - 1);
+            int yCoord = _random.Next(0, _fieldDimension - 1);
+            imvbl.Move(new Point(xCoord, yCoord));
         }
         /// <summary>
         /// Проверяет необходимость выолпнения работы
