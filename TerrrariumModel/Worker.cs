@@ -5,6 +5,7 @@ namespace TerrrariumModel
 {
     public class Worker : Employee, IManagable
     {
+
         public Worker(string name, decimal salary = 100)
         {
             base.Name = name;
@@ -16,22 +17,31 @@ namespace TerrrariumModel
             base.MoneyCount += base.Salary + base.SalaryAdditionCount;
         }
 
+        public void UpdateMeeting(string greeting)
+        {
+            OnMeetingHappened(new MeetingEventArgs(greeting));
+        }
+        protected override void OnMeetingHappened(MeetingEventArgs e)
+        {
+            base.OnMeetingHappened(e);
+        }
+
         public override void Talk(Employee ee)
         {
             // Очень не нравится, что вызываются методы консоли в коде
             // Хотелось бы услышать рекомендации по исправлению этого
             if (ee is Boss)
             {
-                Console.WriteLine( $"From: {Say("Hello, Boss!")} To: {ee.ToString()}" );
+                UpdateMeeting( $"From: {Say("Hello, Boss!")} To: {ee.ToString()}" );
                 return;
             }
             if (ee is BigBoss)
             {
-                Console.WriteLine( $"From: {Say("Good bless you, Sir!")} To: {ee.ToString()}" );
+                UpdateMeeting( $"From: {Say("Good bless you, Sir!")} To: {ee.ToString()}" );
                 return;
             }
 
-            Console.WriteLine( $"From: {Say("Hi, comrade!")} To: {ee.ToString()}" );
+            UpdateMeeting( $"From: {Say("Hi, comrade!")} To: {ee.ToString()}" );
         }
 
         public override string ToString()

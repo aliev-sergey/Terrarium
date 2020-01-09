@@ -15,7 +15,7 @@ namespace Terrarium
         /// </summary>
         private List<IMovable> _movableObjects = new List<IMovable>();
         private Random _random = new Random(Environment.TickCount);
-        
+        private delegate void _meetingHandler(string message);
         /// <summary>
         /// Массив имен, которые случайным образом присваиваются сотрудникам
         /// </summary>
@@ -26,7 +26,7 @@ namespace Terrarium
             "Максим", "Марк", "Михаил", "Никита", "Николай", "Олег", "Павел", "Пётр", "Роман", "Руслан",
             "Сергей", "Тимур", "Фёдор", "Юрий", "Ярослав" };
 
-        public WorkField(UnitCounts counts, int FieldDimension = 5)
+        public WorkField(UnitCounts counts, EventHandler<MeetingEventArgs>meetingEventHandler, int FieldDimension = 5)
         {
             if (FieldDimension > 10)
             {
@@ -34,7 +34,7 @@ namespace Terrarium
             }
             _fieldDimension = FieldDimension;
 
-            AddEmployeesToField(counts.WorkerCount, counts.BossCount, counts.BigBossCount);
+            AddEmployeesToField(counts.WorkerCount, counts.BossCount, counts.BigBossCount, meetingEventHandler);
             AddCustomerToField(counts.CustomerCount);
             AddWorkToField(counts.WorkCount);
             RandomizeMovableLocation();
@@ -77,7 +77,7 @@ namespace Terrarium
         /// <param name="workerCount">Количество рабочих</param>
         /// <param name="bossCount">Количество боссов</param>
         /// <param name="bigBossCount">Количество бигбоссов</param>
-        private void AddEmployeesToField(int workerCount, int bossCount, int bigBossCount)
+        private void AddEmployeesToField(int workerCount, int bossCount, int bigBossCount, EventHandler<MeetingEventArgs> meetingEventHandler)
         {
             int iterCount = Math.Max(Math.Max(workerCount, bossCount), bigBossCount);
 
@@ -97,6 +97,8 @@ namespace Terrarium
                 {
                     AddMovableToField(new BigBoss(_namesOfEmployees[_random.Next(0, _namesOfEmployees.Length - 1)]));
                 }
+                
+                (_movableObjects[i] as Employee).GreetingHappend += meetingEventHandler;
             }
         }
 

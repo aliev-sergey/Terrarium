@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Terrarium
 {
@@ -9,7 +10,7 @@ namespace Terrarium
         private static System.Timers.Timer aTimer;
         public Game(UnitCounts counts, int dimension = 5)
         {
-            _field = new WorkField(counts, dimension);
+            _field = new WorkField(counts, OnGreetingHappened, dimension);
         }
         /// <summary>
         /// Последовательно выполняет все действия в отдельном потоке, пока не закончится рабочий день
@@ -40,6 +41,11 @@ namespace Terrarium
 
             aTimer.Enabled = true;
             Thread.Sleep(minutes * 60000);
+        }
+
+        private void OnGreetingHappened(object sender, TerrrariumModel.MeetingEventArgs e)
+        {
+            Console.WriteLine(e.Greeting);
         }
     }
 }

@@ -23,20 +23,29 @@ namespace TerrrariumModel
             imngbl.DoWork();
         }
 
+        public void UpdateMeeting(string greeting)
+        {
+            OnMeetingHappened(new MeetingEventArgs(greeting));
+        }
+        protected override void OnMeetingHappened(MeetingEventArgs e)
+        {
+            base.OnMeetingHappened(e);
+        }
+
         public override void Talk(Employee ee)
         {
             if (ee is Boss)
             {
-                Console.WriteLine($"From: {Say("What's up!")} To: {ee.ToString()}");
+                UpdateMeeting($"From: {Say("What's up!")} To: {ee.ToString()}");
                 return;
             }
             if (ee is BigBoss)
             {
-                Console.WriteLine($"From: {Say("Hello, Boss!")} To: {ee.ToString()}");
+                UpdateMeeting($"From: {Say("Hello, Boss!")} To: {ee.ToString()}");
                 return;
             }
 
-            Console.WriteLine($"From: {Say("Hi!")} To: {ee.ToString()}");
+            UpdateMeeting($"From: {Say("Hi!")} To: {ee.ToString()}");
         }
 
         public override string ToString()

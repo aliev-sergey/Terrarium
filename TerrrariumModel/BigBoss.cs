@@ -19,17 +19,27 @@ namespace TerrrariumModel
         {
             if (ee is Boss)
             {
-                Console.WriteLine($"From: {Say("How are you, Buddy!")} To: {ee.ToString()}");
+                UpdateMeeting($"From: {Say("How are you, Buddy!")} To: {ee.ToString()}");
                 return;
             }
             if (ee is BigBoss)
             {
-                Console.WriteLine($"From: {Say("Assalam Aleykum!")} To: {ee.ToString()}");
+                UpdateMeeting($"From: {Say("Assalam Aleykum!")} To: {ee.ToString()}");
                 return;
             }
 
             Console.WriteLine($"From: {Say("Hi!")} To: {ee.ToString()}");
         }
+
+        public void UpdateMeeting(string greeting)
+        {
+            OnMeetingHappened(new MeetingEventArgs(greeting));
+        }
+        protected override void OnMeetingHappened(MeetingEventArgs e)
+        {
+            base.OnMeetingHappened(e);
+        }
+
         /// <summary>
         /// Генерирует надбавку к зарплате в клетке, в которой находится
         /// </summary>

@@ -1,4 +1,7 @@
-﻿namespace TerrrariumModel
+﻿using System;
+using System.Collections.Generic;
+
+namespace TerrrariumModel
 {
         public abstract class Employee : IMovable
         {
@@ -8,9 +11,13 @@
             public string Name { get; protected set; } // Имя работника
             public bool Mood { get; set; } = true; // Настроение работника
             public Point Location { get; set; } = new Point(0, 0); // Начальная позиция
-
+            public event EventHandler<MeetingEventArgs> GreetingHappend;
             public bool IsAlive => true; // Живая ли сущность?
 
+            protected virtual void OnMeetingHappened(MeetingEventArgs e)
+            {
+                GreetingHappend?.Invoke(this, e);
+            }
             public void Move(Point p) // Двигается в точку p
             {
                 Location = p;
@@ -27,5 +34,15 @@
             {
                 return $"Name: {Name}";
             }
+        }
+
+
+        public class MeetingEventArgs : EventArgs
+        {
+            public MeetingEventArgs(string greeting)
+            {
+                Greeting = greeting;
+            }
+            public string Greeting { get; }
         }
 }
