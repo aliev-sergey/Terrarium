@@ -10,7 +10,7 @@ namespace TerrrariumModel
         {
             public decimal Salary { get; set; } // Зарплата, получаемая за каждую выполненную единицу работы
             public decimal MoneyCount { get; set; } = 0; // Накопленные средства
-            public decimal SaLaryAdditionCount { get; set; } = 0; // Величина надбавки з/п
+            public decimal SalaryAdditionCount { get; set; } = 0; // Величина надбавки з/п
             public string Name { get; protected set; } // Имя работника
             public bool Mood { get; set; } = true; // Настроение работника
             public Point Location { get; set; } = new Point(0, 0); // Начальная позиция

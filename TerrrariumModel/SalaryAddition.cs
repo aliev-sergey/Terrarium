@@ -21,7 +21,7 @@ namespace TerrrariumModel
 
         public void AddSalary(Employee ee)
         {
-            ee.SaLaryAdditionCount = AdditionCount;
+            ee.SalaryAdditionCount = AdditionCount;
             ee.Mood = true;
         }
 

@@ -260,7 +260,7 @@ namespace Terrarium
                 if (employeePerson.Location == salaryAddObj.Location && employeePerson is Employee && employeePerson != salaryAddObj)
                 {
                     SalaryAddition salAddition = salaryAddObj as SalaryAddition;
-                    (employeePerson as Employee).SaLaryAdditionCount += salAddition.AdditionCount;
+                    (employeePerson as Employee).SalaryAdditionCount += salAddition.AdditionCount;
                     salAddition.Location = new Point(_fieldDimension + 1, _fieldDimension + 1);
                 }
             }

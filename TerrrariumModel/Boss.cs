@@ -17,7 +17,7 @@ namespace TerrrariumModel
         public void DoWork()
         {
             Thread.Sleep(1000);
-            base.MoneyCount += base.Salary + base.SaLaryAdditionCount;
+            base.MoneyCount += base.Salary + base.SalaryAdditionCount;
         }
 
         public void Manage(IManagable imngbl)
