@@ -20,7 +20,7 @@ namespace Terrarium
         {
             var cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
-
+            
             Task runGame = Task.Run(() =>
             {
                 do
@@ -31,15 +31,8 @@ namespace Terrarium
                 }
                 while (!token.IsCancellationRequested);
             }, cts.Token);
+            cts.CancelAfter(minutes * 60000);
 
-            aTimer = new System.Timers.Timer(minutes * 60000);
-            aTimer.Elapsed += ((o, e) => 
-            {
-                cts.Cancel();
-                aTimer.Close();
-            });
-
-            aTimer.Enabled = true;
             Thread.Sleep(minutes * 60000);
         }
 
